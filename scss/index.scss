@@ -113,3 +113,19 @@
 
 }
 
+.admin-bottom{
+    .border-row{
+        border: 1px solid gray;
+        .col-3:last-child{
+            display: flex;
+            align-items: center;
+            border-left: 1px solid gray;
+        }
+        .col-3:first-child{
+            display: flex;
+            align-items: center;
+            border-right: 1px solid gray;
+        }
+    }
+}
+

@@ -93,3 +93,17 @@
   padding: 20px 0;
   font-size: 20px;
 }
+
+.admin-bottom .border-row {
+  border: 1px solid gray;
+}
+.admin-bottom .border-row .col-3:last-child {
+  display: flex;
+  align-items: center;
+  border-left: 1px solid gray;
+}
+.admin-bottom .border-row .col-3:first-child {
+  display: flex;
+  align-items: center;
+  border-right: 1px solid gray;
+}
