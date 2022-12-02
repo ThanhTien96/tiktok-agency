@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>movie-api</title>
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <style>
+        .card-body input::placeholder{
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div>
+        <button id="showButton" onclick="showForm()" class="btn btn-info mx-5 mt-3">Tạo Tài Khoản</button>
+        <button id="closeButton" onclick="closeForm()" class="btn btn-info mx-5 mt-3 " style="display: none">Về Đăng
+            Nhập</button>
+    </div>
+    
+    
+    <div class="container" id="loginForm" style="display: block;">
+        <div class="row">
+            <div class="col-8 offset-2 text-center form-set-layout">
+                <div class="card">
+                    <div class="card-header bg-dark">
+                        <h4 class="text-center py-2 text-white">Đăng Nhập</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3 row">
+                            <label for="inputUsername" class="col-sm-2 col-form-label">Tài Khoản</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputUsername">
+                            </div>
+                        </div>
+    
+                        <div class="mb-3 row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Mật Khẩu</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputPassword">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center py-3">
+                        <button onclick="login()" class="btn btn-success me-4">Đăng Nhập</button>
+    
+                    </div>
+    
+                </div>
+                <span class="forgot-account">Quên Mật Khẩu</span>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="reges-bg" id="regisForm" style="display: none">
+        <div class="container">
+            <div class="row">
+                <div class="col-8 offset-2 text-center">
+                    <div class="card">
+                        <div class="card-header bg-dark">
+                            <h4 class="text-center py-2 text-white">Đăng Ký</h4>
+                        </div>
+                        <div class="card-body">
+    
+                            <div class="mb-3 row">
+                                <label for="createUser" class="col-sm-2 col-form-label">Tài Khoản</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="createUser">
+                                </div>
+                            </div>
+    
+                            <div class="mb-3 row">
+                                <label for="createPassword" class="col-sm-2 col-form-label">Mật Khẩu</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="createPassword">
+                                </div>
+                            </div>
+    
+                            <div class="mb-3 row">
+                                <label for="createFullName" class="col-sm-2 col-form-label">Họ Và Tên</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="createFullName">
+                                </div>
+                            </div>
+    
+                            <div class="mb-3 row">
+                                <label for="createEmail" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" id="createEmail">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="createNumPhone" class="col-sm-2 col-form-label">Số Điện Thoại</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="createNumPhone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center py-3">
+                            <button onclick="register()" class="btn btn-success">Đăng ký</button>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+    
+        function login() {
+            $.ajax({
+                url: 'http://localhost:5000/home/login',
+                type: 'POST',
+                data: {
+                    username: $('#inputUsername').val(),
+                    password: $('#inputPassword').val(),
+                }
+            }).then(data => {
+                setCookie('token', data.token, 1);
+                if(data.login === true){
+                    document.location.href = '/index.html'
+                }
+            }).catch(err => {
+                alert(err.responseJSON)
+            })
+        } 
+    </script>
+    
+    
+    <script>
+    
+        function showForm() {
+            getId('loginForm').style.display = 'none';
+            getId('regisForm').style.display = 'block';
+            getId('closeButton').style.display = 'block';
+            getId('showButton').style.display = 'none';
+    
+        }
+        function closeForm() {
+            getId('loginForm').style.display = 'block';
+            getId('regisForm').style.display = 'none';
+            getId('showButton').style.display = 'block';
+            getId('closeButton').style.display = 'none';
+    
+        }
+    
+        async function register() {
+    
+            let checkValid = validForm();
+            if (!checkValid) return;
+    
+            var newAccount = {
+                username: $('#createUser').val(),
+                password: $('#createPassword').val(),
+                fullName: $('#createFullName').val(),
+                email: $('#createEmail').val(),
+                phoneNumber: $('#createNumPhone').val(),
+            }
+    
+            try {
+                await $.ajax({
+                    url: 'http://localhost:5000/api/user/register',
+                    method: 'post',
+                    data: newAccount,
+                });
+                alert('Đăng Ký Thành Công')
+            } catch (err) {
+                console.log(err);
+            }
+    
+    
+        }
+    
+    
+    
+        function getId(id) {
+            return document.getElementById(id);
+        };
+    
+        function validForm() {
+    
+            var isCheckForm = true;
+    
+            var username = getId('createUser');
+            var password = getId('createPassword');
+            var fullName = getId('createFullName');
+            var email = getId('createEmail');
+            var phoneNumber = getId('createNumPhone');
+    
+            isCheckForm &= minMax('createUser', 5, 30) && valid('createUser', 'Tài khoản')
+    
+            isCheckForm &= minMax('createPassword', 5, 30) && valid('createPassword', 'Mật khẩu')
+    
+            isCheckForm &= minMax('createFullName', 5, 30) && valid('createFullName', 'Tên')
+    
+            isCheckForm &= minMax('createEmail', 5, 30) && valid('createEmail', 'Email')
+    
+            isCheckForm &= minMax('createNumPhone', 5, 30) && valid('createNumPhone', 'Số Điên Thoại')
+    
+            return isCheckForm
+        }
+    
+        function minMax(id, min, max) {
+            var val = getId(id)
+            if (val.value.length < 5) {
+                return val.placeholder = `*Độ dài phải nhiều hơn 5 ký tự`
+            }
+            if (val.value.length > 30) {
+                return val.placeholder = `* Độ dài chỉ được tối đa 30 ký tự`
+            }
+            return true;
+        }
+        function valid(id, name) {
+            var val = getId(id)
+            if (val.value.length === 0) {
+                return val.placeholder = `*${name} không được bỏ trống`
+            }
+            return true
+        }
+    
+    
+    </script>
+
+    
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
+
+
+       
+</body>
+
+</html>
