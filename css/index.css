@@ -97,12 +97,14 @@
 .admin-bottom .border-row {
   border: 1px solid gray;
 }
-.admin-bottom .border-row .col-3:last-child {
+.admin-bottom .border-row .col-4 {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   border-left: 1px solid gray;
 }
-.admin-bottom .border-row .col-3:first-child {
+.admin-bottom .border-row .col-3 {
   display: flex;
   align-items: center;
   border-right: 1px solid gray;
